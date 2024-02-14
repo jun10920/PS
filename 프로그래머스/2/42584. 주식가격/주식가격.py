@@ -1,5 +1,5 @@
 def solution(prices):
-    length =len(prices)
+    length = len(prices)
     answer = [0] * length
     stack = []
     
@@ -8,9 +8,9 @@ def solution(prices):
             j = stack.pop()
             answer[j] = i - j
         stack.append(i)
-    
+        
     while stack:
         j = stack.pop()
-        answer[j] = length-1 -j
+        answer[j] = length - 1 - j
     
     return answer
