@@ -1,8 +1,8 @@
 import heapq
 
 def solution(jobs):
-    current_time, wait_list = 0, []
     jobs.sort()
+    current_time, wait_list = 0, []
     job_index, total_time = 0, 0
     count = 0
     
@@ -17,4 +17,10 @@ def solution(jobs):
             count += 1
         else:
             current_time = jobs[job_index][0]
+            
     return total_time // len(jobs)
+    
+    
+    
+    answer = 0
+    return answer
