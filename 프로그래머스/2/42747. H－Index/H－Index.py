@@ -1,11 +1,10 @@
-def solution(citations):
-    citations.sort(reverse=True)
+def solution(c):
+    c.sort(reverse = True)
     answer = 0
-    
-    for i, v in enumerate(citations):
+    for i,v in enumerate(c):
         if v >= i + 1:
             answer = i + 1
-        else:
-            break
-
+    
+    if c[-1] > len(c):
+        answer = len(c)
     return answer
