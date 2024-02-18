@@ -1,15 +1,17 @@
-def solution(progresses, speeds):
-    days = []
-    for progress, speed in zip(progresses, speeds):
-        day = -((progress - 100)// speed)
-        days.append(day)
-    days.reverse()
+from collections import deque
+def solution(prog, speeds):
+    
+    dayLeft = deque()
+    for p, s in zip(prog, speeds):
+        dayLeft.append(-((p - 100) // s))
+    print(dayLeft)
     answer = []
-    while days:
-        current_day = days.pop()
+    
+    while dayLeft:
         count = 1
-        while days and days[-1] <= current_day:
-            days.pop()
-            count += 1
-        answer.append(count)     
+        first = dayLeft.popleft()
+        while dayLeft and first >= dayLeft[0]:
+            dayLeft.popleft()
+            count +=1
+        answer.append(count)
     return answer
