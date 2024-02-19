@@ -1,8 +1,8 @@
-def solution(clothes):
-    dic= {}
-    for c, t in clothes:
-        dic[t] = dic.get(t,0) + 1
+from collections import Counter
+def solution(c): 
+    arr = Counter([i[1] for i in c])
     answer = 1
-    for t in dic:
-        answer *= (dic[t] + 1)
+    for i in arr.values():
+        answer *= (i+1)
+
     return answer -1
