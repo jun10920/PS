@@ -1,9 +1,6 @@
-def dfs(numbers, target, index, current):
-    if index == len(numbers):
-        return 1 if current == target else 0
-    else:
-        return dfs(numbers, target, index +1, current + numbers[index]) + dfs(numbers, target, index +1, current - numbers[index]) 
-    
+from itertools import product
 
 def solution(numbers, target):
-    return dfs(numbers, target, 0 , 0)
+    l = [(x, -x) for x in numbers]
+    s = list(map(sum, product(*l)))
+    return s.count(target)
