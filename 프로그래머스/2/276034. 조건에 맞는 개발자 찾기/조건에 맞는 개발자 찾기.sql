@@ -1,14 +1,4 @@
--- 코드를 작성해주세요
-WITH A AS (SELECT *
-          FROM DEVELOPERS
-          NATURAL JOIN SKILLCODES
-          WHERE CODE & SKILL_CODE = CODE)
-
-SELECT ID, EMAIL, FIRST_NAME, LAST_NAME
-FROM DEVELOPERS
-WHERE ID = (SELECT 
-                 CASE
-                    WHEN ID IN (SELECT ID FROM A WHERE NAME = 'Python') THEN ID
-                    WHEN ID IN (SELECT ID FROM A WHERE NAME = 'C#') THEN ID
-                 END AS ID)
-ORDER BY ID ASC
+select ID, EMAIL, FIRST_NAME, LAST_NAME
+from DEVELOPERS
+where SKILL_CODE&(select sum(CODE) from SKILLCODES where NAME in('Python','C#'))
+order by ID
