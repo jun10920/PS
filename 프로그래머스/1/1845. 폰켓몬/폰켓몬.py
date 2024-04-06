@@ -1,3 +1,6 @@
 def solution(nums):
-    howMany = len(nums)//2
-    return min(howMany, len(set(nums)))
+    first = len(nums) // 2
+    nums = set(nums)
+    second = len(nums)
+    
+    return first if first < second else second 
