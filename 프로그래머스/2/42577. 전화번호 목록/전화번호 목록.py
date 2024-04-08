@@ -1,9 +1,11 @@
-def solution(pb):
+def solution(phone_book):
+    phone_hash = {phone: True for phone in phone_book}
     
-    pb.sort()
-    for i in range(len(pb)-1):
-        if pb[i+1].startswith(pb[i]):
-            return False
-    
+    for phone in phone_book:
+        prefix = ""
+        for number in phone:
+            prefix += number
+            if prefix in phone_hash and prefix != phone:
+                return False
+                
     return True
-    
