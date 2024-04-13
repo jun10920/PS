@@ -1,18 +1,20 @@
 def solution(s):
+    
     if s[0] == ')' or s[-1] == '(':
         return False
     
-    stack = []
+    list1 = []
+    
     for i in s:
-        if i == '(':
-            stack.append(i)
+        if i == "(":
+            list1.append(i)
         else:
-            if not stack:
+            if not list1:
                 return False
             else:
-                stack.pop()
-    if stack:
+                list1.pop()
+    
+    if list1:
         return False
     else:
         return True
-    
