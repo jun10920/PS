@@ -1,22 +1,24 @@
 import heapq
 
 def solution(operations):
-    heap = []
+    
+    stack = []
     
     for i in operations:
         command, value = i.split()
         value = int(value)
         
         if command == 'I':
-            heapq.heappush(heap, value)
-        elif heap:
-            if value == -1:
-                heapq.heappop(heap)
+            heapq.heappush(stack, value)
+        elif stack:
+            if value == 1:
+                stack.remove(max(stack))
             else:
-                heap.remove(max(heap))
-        heapq.heapify(heap)
-        
-    if not heap:
-        return [0, 0]
+                heapq.heappop(stack)
+                
+        heapq.heapify(stack)
+            
+    if stack:
+        return [max(stack), stack[0]]
     else:
-        return [max(heap), heap[0]] 
+        return [0,0]
