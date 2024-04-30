@@ -1,11 +1,14 @@
 def solution(sizes):
-    maxArr=[]
-    minArr=[]
+    
+    max1 = 0
+    max2 = 0
+    
     for i in sizes:
-        if i[0] > i[1]:
-            maxArr.append(i[0])
-            minArr.append(i[1])
-        else:
-            maxArr.append(i[1])
-            minArr.append(i[0])
-    return max(maxArr) * max(minArr)
+        i.sort(reverse = True)
+        
+        if i[0] > max1:
+            max1 = i[0]
+        if i[1] > max2:
+            max2 = i[1]
+    
+    return max1 * max2
