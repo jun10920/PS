@@ -1,23 +1,26 @@
 from itertools import permutations
 
-def checkPrime(n):
-    if n < 2:
+def check(num):
+    if num < 2:
         return False
-    for i in range(2, int(n**(1/2))+1):
-        if n % i == 0:
-            return False
-    return True
+    else:
+        for i in range(2, int(num**(1/2) + 1)):
+            if num % i == 0:
+                return False
+        return True
 
 def solution(numbers):
-    answer = set()
+    count = 0
     arr = []
-    for i in range(1,len(numbers)+1):
-        arr += list(permutations(numbers,i))
+    for i in range(1, len(numbers) + 1):
+        arr += [i for i in permutations(numbers, i)]
     
-    arr2 = [int(''.join(t)) for t in arr]
+    num = [int(''.join(t)) for t in arr]
     
-    for i in arr2:
-        if checkPrime(i):
-            answer.add(i)
+    result = set()
+    for i in num:
+        if check(i):
+            result.add(i)
+            
     
-    return len(answer)
+    return len(result)
