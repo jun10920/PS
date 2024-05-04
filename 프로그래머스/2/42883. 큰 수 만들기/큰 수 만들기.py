@@ -1,13 +1,14 @@
 def solution(number, k):
-    stack = [int(number[0])]
     
+    stack = [number[0]]
+
     for i in number[1:]:
-        while k != 0 and stack and stack[-1] < int(i):
+        while k != 0 and stack and int(i) > int(stack[-1]):
             stack.pop()
             k -= 1
-        stack.append(int(i))
-    
+        stack.append(i)
+            
     if k != 0:
         stack = stack[:-k]
-    stack = list(map(str, stack))
-    return ''.join(stack)
+        
+    return ''.join(stack) 
