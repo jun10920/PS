@@ -15,6 +15,7 @@ def bfs(board, start_x, start_y, end_x, end_y):
             if board[nx][ny] == 1:
                 board[nx][ny] = -1  # 방문 표시
                 queue.append((nx, ny, distance + 1))
+
 def solution(rectangle, characterX, characterY, itemX, itemY):
     board = [[0] * 102 for _ in range(102)]  # 지도 확장
 
