@@ -1,40 +1,28 @@
-def solution(genres, plays):
-    category_array ={} # 같은 카테고리는 배열로 체이닝
-    category_sum ={} # 카테고리별 총합
-		
-		
-    for index in range(len(genres)) : # O(n)
-        category = genres[index] # key
-        
-        # 해시 맵 안에 카테고리로 된 키가 있을 때
-        if category in category_array and category in category_sum :
-            
-            array = category_array[category] # 체이닝 배열 꺼내기.
-            array.append(index) #인덱스 삽입 후 정렬
-            
-            for i in range(len(array)-1) : #선택정렬 
-                max = i
-                for j in range(i+1,len(array)) :
-                    if plays[array[max]] < plays[array[j]] : # 같은 경우는 스왑 x 더 작은 인덱스가 살아 남음.
-                        max = j 
-                array[i], array[max] = array[max], array[i] # swap
+from collections import defaultdict
 
-            if len(array) > 2 : array.pop() #정렬 후 배열 길이 2로 유지.
-
-            category_array[category]= array # 다시 넣기
-            category_sum[category] += plays[index] # 더하기
-
-        else : # 해시 맵 안에 카테고리로 된 키가 없을 때 -> 초기화
-            category_array[category] = [index]
-            category_sum[category] = plays[index]
-		
-		#카테고리별로 재생수 총합 퀵정렬 -> O(nlogn)
-    sorted_category = sorted(category_sum.items(), key=lambda item: item[1], reverse=True)
-
+def solution(g, p):
+    # 장르가 높은 순
+    # 장르 내에서 많이 재생된 순
+    # 재생 횟수가 같다면 고유 번호가 낮은 순
+    # 각 장르 별로 최대 2개
+    
+    # dict 2개 (장르, 재생 회수 합) / (장르, (재생회수, 고유 번호))
+    # 1번 dict 정렬 - 재생 회수 합이 높은 순으로
+    # 1번 dict의 key 순으로 2번 dict의 장르의 재생회수, 고유 번호 순으로 정렬
+    # 2번 dict의 각 장르의 고유번호를 answer에 기입
     answer = []
-
-    #카테고리 안에 있는 체이닝 배열 붙혀서 반환.
-    for key,value in sorted_category :
-        answer += category_array[key]
-
+    dict1 = defaultdict(int)
+    dict2 = defaultdict(list)
+    
+    for i, (g, p) in enumerate(zip(g, p)):
+        dict1[g] += p
+        dict2[g].append((p, i))
+    
+    sorted_g = sorted(dict1.keys(), key = lambda x : dict1[x], reverse = True)
+        
+    for i in sorted_g:
+        
+        sorted_s = sorted(dict2[i], key = lambda x : (-x[0], x[1]))
+        
+        answer += [song[1] for song in sorted_s[:2]]
     return answer
