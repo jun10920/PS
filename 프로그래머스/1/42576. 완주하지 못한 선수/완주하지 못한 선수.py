@@ -1,7 +1,15 @@
+from collections import defaultdict
+
 def solution(part, comp):
-    part.sort()
-    comp.sort()
-    for a,b in zip(part, comp):
-        if a != b:
-            return a
-    return part[-1]
+    
+    temp = defaultdict(int)
+    
+    for i in part:
+        temp[i] += 1
+        
+    for i in comp:
+        temp[i] -= 1
+    
+    for i in temp.items():
+        if i[1] == 1:
+            return i[0]
