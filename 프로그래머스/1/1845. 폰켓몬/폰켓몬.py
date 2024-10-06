@@ -1,4 +1,3 @@
 def solution(nums):
-    
-    nums1 = set(nums)
-    return min(len(nums1), int(len(nums) / 2))
+    temp = len(set(nums))
+    return min(temp, len(nums)//2)
