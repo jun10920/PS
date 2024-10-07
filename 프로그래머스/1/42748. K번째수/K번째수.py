@@ -1,10 +1,12 @@
 def solution(array, commands):
+    
     answer = []
-    for i in commands:
-        left = i[0] - 1
-        right = i[1]
-        index = i[2] - 1
-        arr = array[left:right]
+    
+    for l in commands:
+        i, j, k = l[0], l[1], l[2]
+        
+        arr = array[i - 1 : j]
         arr.sort()
-        answer.append(arr[index])
+        answer.append(arr[k-1])
+        
     return answer
