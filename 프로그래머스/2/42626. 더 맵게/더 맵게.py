@@ -1,18 +1,18 @@
 import heapq
 
-def solution(s, k):
+def solution(s, K):
     
+    cnt = 0
     heapq.heapify(s)
-    count = 0
+    
+    while s[0] < K:
         
-    while k > s[0]:
         if len(s) < 2:
             return -1
         
-        first = heapq.heappop(s)
-        second = heapq.heappop(s)
-        new = first + (second * 2)
-        heapq.heappush(s, new)
-        count += 1
-
-    return count
+        temp1 = heapq.heappop(s)
+        temp2 = heapq.heappop(s)
+        heapq.heappush(s, temp1 + (temp2 * 2))
+        cnt += 1
+    
+    return cnt
