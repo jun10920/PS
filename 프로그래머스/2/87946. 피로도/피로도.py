@@ -1,17 +1,22 @@
+from collections import deque
 from itertools import permutations
 
 def solution(k, dungeons):
-    count = 0
-    arr = list(permutations(dungeons, len(dungeons)))
+    answer = -1
     
-    for i in arr:
-        hp = k
-        countImpl = 0
+    perm = list(permutations(dungeons, len(dungeons)))
+    
+    for i in perm:
+        count = 0
+        HP = k
+        for j in range(0, len(dungeons)):
+            minHP = i[j][0]
+            minusHP = i[j][1]
+            if minHP <= HP:
+                HP -= minusHP
+                count += 1
+            else:
+                break
+        answer = max(answer, count)
         
-        for j in i:
-            if hp >= j[0]:
-                hp -= j[1]
-                countImpl += 1
-        count = max(count, countImpl)
-    
-    return count
+    return answer
