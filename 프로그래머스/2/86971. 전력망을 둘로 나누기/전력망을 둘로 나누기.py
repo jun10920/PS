@@ -1,36 +1,39 @@
 from collections import defaultdict
 
-def dfs(network, wire, visited):
-    visited.add(wire)
-    
+def dfs(graph, node, visited):
+    visited.add(node)
     count = 1
-    for i in network[wire]:
+    
+    for i in graph[node]:
         if i not in visited:
-            count += dfs(network, i, visited)
+            count += dfs(graph, i, visited)
+    
     return count
     
 
 def solution(n, wires):
-    network = defaultdict(list)
     
-    for i in range(len(wires)):
-        network[wires[i][0]].append(wires[i][1]) 
-        network[wires[i][1]].append(wires[i][0]) 
+    graph = defaultdict(list)
+    
+    for i in wires:
+        v1, v2 = i
+        graph[v1].append(v2)
+        graph[v2].append(v1)
     
     min_diff = n
     
-    for i in range(len(wires)):
-        network[wires[i][0]].remove(wires[i][1]) 
-        network[wires[i][1]].remove(wires[i][0])
+    for i in wires:
+        v1, v2 = i
+        graph[v1].remove(v2)
+        graph[v2].remove(v1)
         
         visited = set()
+        count = dfs(graph, v1, visited)
         
-        count = dfs(network, wires[i][0], visited)
-        diff = abs(count - (n - count))
-        
+        diff = abs(count - (n-count))
         min_diff = min(diff, min_diff)
         
-        network[wires[i][0]].append(wires[i][1]) 
-        network[wires[i][1]].append(wires[i][0]) 
-        
+        graph[v1].append(v2)
+        graph[v2].append(v1)
+    
     return min_diff
