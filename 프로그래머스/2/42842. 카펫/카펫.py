@@ -1,7 +1,12 @@
 def solution(brown, yellow):
-    for i in range(3, int(brown + yellow**(0.5))):
-        if (brown + yellow) % i == 0:
-            y = (brown + yellow) // i
-            x = (brown + yellow) // y
-            if (x-2)*(y-2) == yellow and x >= y:
-                return [x,y]
+    
+    total = brown + yellow
+    answer = []
+    
+    for height in range(1, int(total**0.5) + 1):
+        
+        if total % height == 0:
+            width = total // height
+            
+            if (width - 2) * (height - 2) == yellow:
+                return [width, height]
