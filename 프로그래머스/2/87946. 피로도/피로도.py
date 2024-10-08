@@ -1,22 +1,22 @@
-from collections import deque
-from itertools import permutations
+def dfs(current_hp, visited, dungeons, count):
+    
+    global answer
+    answer = max(answer, count)
+    
+    for i in range(len(dungeons)):
+        min_hp, use_hp = dungeons[i]
+        if not visited[i] and  current_hp >= min_hp:
+            visited[i] = True
+            dfs(current_hp - use_hp, visited, dungeons, count + 1)
+            visited[i] = False
+        
 
 def solution(k, dungeons):
+    global answer
     answer = -1
     
-    perm = list(permutations(dungeons, len(dungeons)))
+    visited = [False] * len(dungeons)
     
-    for i in perm:
-        count = 0
-        HP = k
-        for j in range(0, len(dungeons)):
-            minHP = i[j][0]
-            minusHP = i[j][1]
-            if minHP <= HP:
-                HP -= minusHP
-                count += 1
-            else:
-                break
-        answer = max(answer, count)
-        
+    dfs(k, visited, dungeons, 0)
+    
     return answer
