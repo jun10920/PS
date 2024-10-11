@@ -1,11 +1,15 @@
 def solution(people, limit):
+    people.sort(reverse = True)
+    light_idx = len(people) - 1
+    heavy_idx = 0
+    boats = 0
     
-    people.sort()
-    left, right, count = 0, len(people) - 1, 0
+    while heavy_idx <= light_idx:
+        
+        if people[light_idx] + people[heavy_idx] <= limit:
+            light_idx -=1
+        
+        boats += 1
+        heavy_idx += 1
     
-    while left <= right:
-        if people[left] + people[right] <= limit:
-            left += 1
-        right -= 1
-        count += 1
-    return count
+    return boats
