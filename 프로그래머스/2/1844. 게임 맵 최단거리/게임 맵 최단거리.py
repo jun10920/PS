@@ -1,27 +1,24 @@
 from collections import deque
 
-def bfs(maps, x, y, n, m):
-    dy = [-1, 1, 0, 0]
-    dx = [0, 0, -1, 1]
+def solution(maps):
     
-    queue = deque()
-    queue.append((x,y))
+    rows, cols = len(maps), len(maps[0])
+    
+    directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+    
+    queue = deque([(0,0,1)])
+    visited = set([(0,0)])
     
     while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if nx < 0 or nx >= n or ny < 0 or ny >= m:
-                continue
-            elif maps[nx][ny] == 0:
-                continue
-            elif maps[nx][ny] == 1:
-                maps[nx][ny] = maps[x][y] + 1
-                queue.append(((nx,ny)))
-    return maps[n-1][m-1] if maps[n-1][m-1] > 1 else -1 
-
-def solution(maps):
-    n = len(maps)
-    m = len(maps[0])
-    return bfs(maps, 0, 0, n, m)
+        x, y, distance = queue.popleft()
+        
+        if x == cols - 1 and y == rows -1:
+            return distance
+        
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            
+            if 0 <= nx < cols and 0 <= ny < rows and maps[ny][nx] == 1 and (nx, ny) not in visited:
+                visited.add((nx, ny))
+                queue.append((nx, ny, distance + 1))
+    return -1
