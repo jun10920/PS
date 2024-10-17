@@ -1,14 +1,29 @@
+import heapq
+
 def solution(n, costs):
-    answer = 0
-    costs.sort(key = lambda x: x[2])
-    link = set([costs[0][0]])
+
+    graph = [[] for _ in range(n)]
+    for u, v, cost in costs:
+        graph[u].append((cost,v))
+        graph[v].append((cost,u))
+        
+    visited = [False] * n # 노드 방문 여부
+    min_heap = [(0, 0)] # (간선 가중치, 시작 노드), 0번 노드에서 시작
+    total_cost = 0
+    edges_used = 0
     
-    while len(link) != n:
-        for v in costs:
-            if v[0] in link and v[1] in link:
-                continue
-            if v[0] in link or v[1] in link:
-                link.update([v[0], v[1]])
-                answer += v[2]
-                break
-    return answer
+    while edges_used < n:
+        cost, u = heapq.heappop(min_heap)
+        
+        if visited[u]:
+            continue
+        
+        visited[u] = True
+        total_cost += cost
+        edges_used += 1
+        
+        for edge_cost, v in graph[u]:
+            if not visited[v]:
+                heapq.heappush(min_heap, (edge_cost, v))
+    
+    return total_cost
