@@ -1,24 +1,35 @@
-n = int(input())
-
-col = [False] * n
-# 오른쪽 대각선 (\ 방향)
-diag1 = [False] * (2 * n - 1)  # 행 - 열의 범위는 -(n - 1) ~ (n - 1)
-# 왼쪽 대각선 (/ 방향)
-diag2 = [False] * (2 * n - 1)  # 행 + 열의 범위는 0 ~ 2 * (n - 1)
-count = 0
-
-def backtrack(row):
-    global count
-    if row == n:
-        count += 1
-        return
+## method
+def sol(k): # k : 놓은 말 개수 - 점유 행 번호로도 활용 가능
+    # 퀸 : 상하좌우 - x, y 좌표 확인 / 대각선 - (y=x 선상 : used_up) r+c 같으면. (y=-x 선상 : used_down) r-c같으면 놓을 수 없음.
+    global n, cnt
     
-    for i in range(n):
-        if not col[i] and not diag1[row - i + (n - 1)] and not diag2[row + i]:
-            col[i] = diag1[row - i + (n - 1)] = diag2[row + i] = True
-            backtrack(row + 1)
-            col[i] = diag1[row - i + (n - 1)] = diag2[row + i] = False
+    if k == n :
+        cnt += 1
+        return
 
-# 백트래킹 실행
-backtrack(0)
-print(count)
+    # i : 점유 열 번호로 활용 가능
+    for i in range(n):
+        if not used_c[i] and not used_up[k+i] and not used_down[(n-1)+k-i]:
+            used_c[i] = True
+            used_up[k+i] = True
+            used_down[(n-1)+k-i] = True
+            sol(k+1)
+            used_c[i] = False
+            used_up[k+i] = False
+            used_down[(n-1)+k-i] = False
+
+## input
+n = int(input())
+maps = [[0]*n for _ in range(n)]
+# 열 점유 여부
+used_c = [False]*n
+# y = x 선상 점유 여부
+used_up = [False]*(2*(n-1)+1)
+# y = -x 선상 점유 여부
+used_down = [False]*(2*(n-1)+1)
+
+cnt = 0
+
+## output
+sol(0)
+print(cnt)
