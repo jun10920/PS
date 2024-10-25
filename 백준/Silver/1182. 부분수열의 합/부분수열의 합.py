@@ -1,19 +1,16 @@
-n, s = map(int, input().split(" "))
-numList = [i for i in list(map(int, input().split(" ")))]
+from itertools import combinations
+
+n, s = map(int, input().split())
+numList = list(map(int, input().split()))
+
 count = 0
-visited = [False] * len(numList)
 
-def dfs(idx, current_sum):
-    global count
-    if idx == n:
-        if current_sum == s:
+# 부분 수열의 길이를 1부터 n까지 순회
+for i in range(1, n + 1):
+    # 길이가 i인 모든 조합을 생성
+    for comb in combinations(numList, i):
+        if sum(comb) == s:
             count += 1
-        return
-    dfs(idx + 1, current_sum + numList[idx])
-    dfs(idx + 1, current_sum)
 
-if s == 0:
-    count -= 1
-
-dfs(0, 0)
+# 결과 출력
 print(count)
