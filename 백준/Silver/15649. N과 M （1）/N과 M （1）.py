@@ -1,19 +1,20 @@
-n, m = list(map(int, input().split()))
+n, m = map(int, input().split())
 
-def back_tracking(arr, now_length, used_num):
-  if now_length == m:
-    print(*arr)
-    return
+def dfs(count):
 
-  for i in range(1, n + 1):
-    if not used_num[i]:
-      arr.append(i)
-      used_num[i] = True
-      back_tracking(arr, now_length + 1, used_num)
-      arr.pop()
-      used_num[i] = False
-      
+    if count == m:
+        print(*selected)
+        return
 
-nums = [i + 1 for i in range(n+1)]
-used_num = [False] * (n + 1)
-back_tracking([], 0, used_num)
+    for i in range(n):
+        if i in visited:
+          continue
+        selected[count] = i + 1
+
+        visited.add(i)
+        dfs(count + 1)
+        visited.remove(i)
+
+selected = [0] * m
+visited = set()
+dfs(0)
