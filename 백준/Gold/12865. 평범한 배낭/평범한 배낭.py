@@ -1,23 +1,32 @@
 n, k = map(int, input().split())
-li = [list(map(int, input().split())) for _ in range(n)]
-dp = [[-1] * (k + 1) for _ in range(n)]
+nLi = [list(map(int, input().split())) for _ in range(n)]
+dp = [[-1] * k for _ in range(n)]
+answer = float("-inf")
 
-def dfs(count, curK):
+def dfs(count, total_w):
+    global answer
+
+    if total_w >= k:
+        return 0
+
     if count == n:
         return 0
 
-    if dp[count][curK] != -1:
-        return dp[count][curK]
+    if dp[count][total_w] != -1:
+        return dp[count][total_w]
+
+    cur_w, cur_v = nLi[count][0], nLi[count][1]
 
     ret = float("-inf")
 
-    if curK + li[count][0] <= k:
-        ret = max(ret, dfs(count + 1, curK + li[count][0]) + li[count][1])
+    if total_w + cur_w <= k:
+        ret = max(ret, dfs(count + 1, total_w + cur_w) + cur_v)
 
-    ret = max(ret, dfs(count + 1, curK))
+    ret = max(ret, dfs(count + 1, total_w))
 
-    dp[count][curK] = ret
-    return dp[count][curK]
+    dp[count][total_w] = ret
 
+    return dp[count][total_w]
 
-print(dfs(0, 0))
+dfs(0, 0)
+print(dp[0][0])
