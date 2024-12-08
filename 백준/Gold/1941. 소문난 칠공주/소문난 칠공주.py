@@ -1,43 +1,45 @@
-from itertools import combinations
 from collections import deque
+from itertools import combinations
 
-# 입력 받기
-maps = [input().strip() for _ in range(5)]
-
-# 상하좌우 방향
-directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-
-# 총 경우의 수
 count = 0
+maps = [input() for _ in range(5)]
+maps2 = []
+moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-# 5x5 좌표를 리스트로 변환
-positions = [(i, j) for i in range(5) for j in range(5)]
 
-# 7명을 선택하는 모든 조합을 구함
-for comb in combinations(positions, 7):
-    # 'S'의 개수를 카운트
-    s_count = sum(1 for y, x in comb if maps[y][x] == 'S')
-    
-    # 'S'가 4명 미만이면 조건 불충족
-    if s_count < 4:
-        continue
-    
-    # 선택된 7명이 연결되어 있는지 확인 (BFS)
-    queue = deque([comb[0]])
-    visited = {comb[0]}
-    connected_count = 1
-    
+def bfs(li):
+    idxli = set(i[0] for i in li)
+
+    # idxli에서 튜플 하나를 꺼내 queue에 추가
+    start = idxli.pop()  # idxli에서 하나 꺼내기
+    queue = deque([start])  # 튜플 형태로 deque 초기화
+    temp = 1
+
     while queue:
         y, x = queue.popleft()
-        for dy, dx in directions:
+
+        for dy, dx in moves:
             ny, nx = y + dy, x + dx
-            if (ny, nx) in comb and (ny, nx) not in visited:
-                visited.add((ny, nx))
+            if (ny, nx) in idxli:
                 queue.append((ny, nx))
-                connected_count += 1
-                
-    # 7명이 모두 연결되어 있으면 경우의 수 증가
-    if connected_count == 7:
-        count += 1
+                idxli.remove((ny, nx))  # 튜플 형태로 제거
+                temp += 1
+
+    return temp == 7
+
+
+for i in range(5):
+    for j in range(5):
+        maps2.append(((i, j), maps[i][j]))
+
+for i in list(combinations(maps2, 7)):
+    sCount = 0
+    for j in i:
+        if j[1] == 'S':
+            sCount += 1
+
+    if sCount >= 4:
+        if bfs(i):
+            count += 1
 
 print(count)
