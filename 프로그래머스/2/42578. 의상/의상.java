@@ -3,15 +3,16 @@ import java.util.*;
 class Solution {
     
     static int answer = 1;
+    
     public int solution(String[][] clothes) {
         
-        HashMap<String, Integer> set = new HashMap<>();
+        HashMap<String, Integer> map = new HashMap<>();
         
         for (String[] c : clothes) {
-            set.put(c[1], set.getOrDefault(c[1], 0) + 1);
+            map.put(c[1], map.getOrDefault(c[1], 0) + 1);
         }
         
-        for (int count : set.values()){
+        for (int count : map.values()) {
             answer *= (count + 1);
         }
         
