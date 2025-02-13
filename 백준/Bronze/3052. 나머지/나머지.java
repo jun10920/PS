@@ -8,20 +8,12 @@ public class Main {
         StringBuilder sb =  new StringBuilder();
         StringTokenizer st;
 
-        Queue<Integer> li = new ArrayDeque<>();
+        HashSet<Integer> li = new HashSet<>();
 
         for (int i = 0; i < 10; i++) {
             int temp = Integer.parseInt(br.readLine());
             li.add(temp % 42);
         }
-
-        int ans = 10;
-        while (!li.isEmpty()) {
-            int temp = li.poll();
-            if (li.contains(temp)) {
-                ans --;
-            }
-        }
-        System.out.println(ans);
+        System.out.println(li.size());
     }
 }
